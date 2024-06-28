@@ -34,12 +34,15 @@ public static class ArraysTester {
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     private static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
-        return new double[0]; // replace this return statement with your own
+        //instanciate a new double type list with length of "length"
+        var result = new double[length];
+        //loop for "length" times.
+        //Inside of the loop, multiply the number with the loop index and add the answer to the list
+        for(int i = 1; i <= length; i++){
+            result[i-1] = (number * i);
+        }
+        //return the list
+        return result;
     }
     
     /// <summary>
@@ -52,10 +55,12 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
+        //Use GetRange method to slice the later part of the list. (data.Count - amount, amount)
+        //Store the list to a variable.
+        var list = data.GetRange(data.Count - amount, amount);
+        //Use RemoveRange to remove the extracted munbers from the list. (data.Count - amount, amount)
+        data.RemoveRange(data.Count - amount, amount);
+        //Use InsertRange to bring the extracted list to the beginning of the list. index: 0
+        data.InsertRange(0, list);
     }
 }
