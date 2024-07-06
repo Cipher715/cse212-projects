@@ -16,6 +16,8 @@
         while (players.Length > 0)
             players.GetNextPerson();
         // Defect(s) Found: 
+        // Because a new person is added to the top of the list, and dequed from the top of the list,
+        // The same person is queued and dequeued until its turns are over.
 
         Console.WriteLine("---------");
 
@@ -39,6 +41,8 @@
             players.GetNextPerson();
 
         // Defect(s) Found: 
+        // Because a new person is added to the top of the list, and dequed from the top of the list,
+        // The same person is queued and dequeued until its turns are over.
 
         Console.WriteLine("---------");
 
@@ -57,6 +61,9 @@
             // Console.WriteLine(players);
         }
         // Defect(s) Found: 
+        // Tim's turn is not recognized as infinit turns.
+        // Add another if statement in GetNextPerson method.
+
 
         Console.WriteLine("---------");
 
@@ -74,6 +81,9 @@
             // Console.WriteLine(players);
         }
         // Defect(s) Found: 
+        // Tim's turn is not recognized as infinit turns.
+        // Add another if statement in GetNextPerson method.
+
 
         Console.WriteLine("---------");
 
@@ -84,5 +94,6 @@
         players = new TakingTurnsQueue();
         players.GetNextPerson();
         // Defect(s) Found:
+        // none.
     }
 }
