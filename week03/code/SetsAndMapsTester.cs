@@ -111,6 +111,24 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        var wordList = new HashSet<string>(words);
+        // Iterate through the set of words
+        foreach (string word in words) {
+            // Make a reverse version of the word. e.g. am → ma
+            char[] charArray = word.ToCharArray();
+            Array.Reverse(charArray);
+            string pair = new string(charArray);
+            // Exclude the same letter word such as "aa"
+            // Print the word and the pair to the console and remove them from the set.
+            // To prevent reading the "pair" as a "word" in further loop.        
+            if (word == pair) {
+                continue;
+            } else if (wordList.Contains(pair)){
+                Console.WriteLine($"{word} & {pair}");
+                wordList.Remove(word);
+                wordList.Remove(pair);
+            }
+        }
     }
 
     /// <summary>
@@ -132,6 +150,15 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            // Get the degree name and store.,
+            string degree = fields[3];
+            // Add the degree to the dictionary if it was first time appeared.
+            if (!degrees.ContainsKey(degree)) {
+                degrees[degree] = 1;
+            } else {
+                // Else, increment the value "count"
+                degrees[degree] += 1;
+            }
         }
 
         return degrees;
@@ -158,7 +185,41 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // Create two dictionaries to store both strings.
+        var letters1 = new Dictionary<char, int>();
+        var letters2 = new Dictionary<char, int>();
+        // Iterate through the string and store information to the dictionary.
+        // Do the same thing to the list2.
+        foreach (char letter in word1) {
+            char lower = Char.ToLower(letter);
+            if (!letters1.ContainsKey(lower)) {
+                letters1[lower] = 1;
+            } else {
+                letters1[lower] += 1;
+            }
+        }
+        foreach (char letter in word2) {
+            char lower = Char.ToLower(letter);
+            if (!letters2.ContainsKey(lower)) {
+                letters2[lower] = 1;
+            } else {
+                letters2[lower] += 1;
+            }
+        }
+        // Remove the row with the key '(space)' from the dictionary 
+        letters1.Remove(' ');
+        letters2.Remove(' ');
+        // Return false if a letter doesn't exist in the other dictionary,
+        // Or the value(count) is different between the dictionaries.
+        foreach (KeyValuePair<char, int> entry in letters1) {
+            if (!letters2.ContainsKey(entry.Key)) {
+                return false;
+            }
+            if (entry.Value != letters2[entry.Key]){
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
@@ -235,5 +296,8 @@ public static class SetsAndMapsTester {
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach(var feature in featureCollection.features) {
+            Console.WriteLine($"{feature.properties.place} - Mag {feature.properties.mag}");
+        }
     }
 }
